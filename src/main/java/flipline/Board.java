@@ -58,22 +58,22 @@ public class Board {
     }
 
     public void printMatrix() {
-        PrintHeader();
-        PrintBody();
-        PrintFooter();
+        printHeader();
+        printBody();
+        printFooter();
     }
 
-    private void PrintHeader() {
+    private void printHeader() {
         System.out.println("===");
         // TODO: Make header dynamic
     }
 
-    private void PrintFooter() {
+    private void printFooter() {
         System.out.println("=== FlipLine v0.1v");
         // TODO: Make footer dynamic
     }
 
-    private void PrintBody() {
+    private void printBody() {
         for (Cell[] cell : cells) {
             for (Cell value : cell) {
                 System.out.print(value + " ");
