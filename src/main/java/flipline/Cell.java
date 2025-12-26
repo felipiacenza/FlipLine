@@ -13,6 +13,10 @@ public class Cell {
         return orientation;
     }
 
+    public Color getColor() {
+        return color;
+    }
+
     public void toggleColor(){
         if (color == Color.RED){
             color = Color.BLUE;

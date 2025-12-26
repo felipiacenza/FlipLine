@@ -32,6 +32,19 @@ public class Board {
         }
     }
 
+    public boolean isSolved() {
+        Color target = cells[0][0].getColor();
+
+        for (int r = 0; r < cells.length; r++) {
+            for (int c = 0; c < cells[r].length; c++) {
+                if (cells[r][c].getColor() != target) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     private void toggleRow(int row) {
         for (int c = 0; c < cells[row].length; c++) {
             cells[row][c].toggleColor();
