@@ -51,16 +51,6 @@ public class Main {
         scanner.close();
     }
 
-    private static void printTitle() {
-        System.out.println("======================");
-        System.out.println(" FLIP LINE  |  v0.1v  ");
-        System.out.println("======================");
-        System.out.println("1. Juego pequeño (4x4)");
-        System.out.println("2. Juego mediano (6x6)");
-        System.out.println("3. Juego grande (8x8)");
-        System.out.println("4. Personalizado");
-    }
-
     private static int readIndex(Scanner scanner, String message, int limit) {
         int value;
 
@@ -110,5 +100,15 @@ public class Main {
             }
             System.out.println("Ingrese un número entero positivo.");
         }
+    }
+
+    private static void printTitle() {
+        System.out.println("======================");
+        System.out.println(" FLIP LINE  |  v0.1v  ");
+        System.out.println("======================");
+        System.out.println("1. Juego pequeño (4x4)");
+        System.out.println("2. Juego mediano (6x6)");
+        System.out.println("3. Juego grande (8x8)");
+        System.out.println("4. Personalizado");
     }
 }
