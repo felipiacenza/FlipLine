@@ -64,19 +64,35 @@ public class Board {
     }
 
     private void printHeader() {
-        System.out.println("===");
-        // TODO: Make header dynamic
+        System.out.print("    ");
+
+        for (int col = 1; col <= cells[0].length; col++) {
+            System.out.printf("%-3d", col);
+        }
+        System.out.println();
+
+        System.out.print("   ");
+        for (int col = 0; col < cells[0].length; col++) {
+            System.out.print("---");
+        }
+        System.out.println();
     }
 
     private void printFooter() {
-        System.out.println("=== FlipLine v0.1v");
-        // TODO: Make footer dynamic
+        System.out.print("   ");
+        for (int col = 0; col < cells[0].length; col++) {
+            System.out.print("---");
+        }
+        System.out.println();
+        System.out.println("    FlipLine v0.1");
     }
 
     private void printBody() {
-        for (Cell[] cell : cells) {
-            for (Cell value : cell) {
-                System.out.print(value + " ");
+        for (int row = 0; row < cells.length; row++) {
+            System.out.printf("%-3d|", row + 1);
+
+            for (int col = 0; col < cells[row].length; col++) {
+                System.out.print(cells[row][col] + " ");
             }
             System.out.println();
         }
