@@ -3,7 +3,7 @@ package flipline;
 import java.util.Random;
 
 public class Board {
-    private Cell[][] cells;
+    private final Cell[][] cells;
 
     public Board(int rows, int columns) {
         cells = new Cell[rows][columns];
@@ -35,9 +35,9 @@ public class Board {
     public boolean isSolved() {
         Color target = cells[0][0].getColor();
 
-        for (int r = 0; r < cells.length; r++) {
-            for (int c = 0; c < cells[r].length; c++) {
-                if (cells[r][c].getColor() != target) {
+        for (Cell[] cell : cells) {
+            for (Cell value : cell) {
+                if (value.getColor() != target) {
                     return false;
                 }
             }
@@ -52,8 +52,8 @@ public class Board {
     }
 
     private void toggleColumn(int col) {
-        for (int r = 0; r < cells.length; r++) {
-            cells[r][col].toggleColor();
+        for (Cell[] cell : cells) {
+            cell[col].toggleColor();
         }
     }
 
@@ -74,9 +74,9 @@ public class Board {
     }
 
     private void PrintBody() {
-        for (int row = 0; row < cells.length; row++) {
-            for (int column = 0; column < cells[row].length; column++) {
-                System.out.print(cells[row][column] + " ");
+        for (Cell[] cell : cells) {
+            for (int column = 0; column < cell.length; column++) {
+                System.out.print(cell[column] + " ");
             }
             System.out.println();
         }

@@ -2,7 +2,7 @@ package flipline;
 
 public class Cell {
     private Color color;
-    private Orientation orientation;
+    private final Orientation orientation;
 
     public Cell(Color color, Orientation orientation) {
         this.color = color;
