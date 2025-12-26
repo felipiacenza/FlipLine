@@ -37,8 +37,11 @@ public class Main {
         while (!board.isSolved()) {
             board.printMatrix();
 
-            int row = readIndex(scanner, "Fila (0 - " + (rows - 1) + "): ", rows);
-            int col = readIndex(scanner, "Columna (0 - " + (cols - 1) + "): ", cols);
+            int userRow = readUserIndex(scanner, "Fila (1 - " + rows + "): ", rows);
+            int userCol = readUserIndex(scanner, "Columna (1 - " + cols+ "): ", cols);
+
+            int row = userRow - 1;
+            int col = userCol - 1;
 
             board.selectCell(row, col);
             moves++;
@@ -51,22 +54,23 @@ public class Main {
         scanner.close();
     }
 
-    private static int readIndex(Scanner scanner, String message, int limit) {
+    private static int readUserIndex(Scanner scanner, String message, int max) {
         int value;
 
         while (true) {
             System.out.print(message);
             if (scanner.hasNextInt()) {
                 value = scanner.nextInt();
-                if (value >= 0 && value < limit) {
+                if (value >= 1 && value <= max) {
                     return value;
                 }
             } else {
                 scanner.next();
             }
-            System.out.println("Índice inválido.");
+            System.out.println("Valor inválido. Ingrese un número entre 1 y " + max + ".");
         }
     }
+
 
     private static int readOption(Scanner scanner) {
         int option;
