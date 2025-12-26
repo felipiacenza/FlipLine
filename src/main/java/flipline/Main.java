@@ -32,7 +32,21 @@ public class Main {
         }
 
         Board board = new Board(rows, cols);
+        int moves = 0;
+
+        while (!board.isSolved()) {
+            board.printMatrix();
+
+            int row = readIndex(scanner, "Fila (0 - " + (rows - 1) + "): ", rows);
+            int col = readIndex(scanner, "Columna (0 - " + (cols - 1) + "): ", cols);
+
+            board.selectCell(row, col);
+            moves++;
+        }
+
         board.printMatrix();
+        System.out.println("¡Juego resuelto!");
+        System.out.println("Movimientos realizados: " + moves);
 
         scanner.close();
     }
@@ -45,6 +59,23 @@ public class Main {
         System.out.println("2. Juego mediano (6x6)");
         System.out.println("3. Juego grande (8x8)");
         System.out.println("4. Personalizado");
+    }
+
+    private static int readIndex(Scanner scanner, String message, int limit) {
+        int value;
+
+        while (true) {
+            System.out.print(message);
+            if (scanner.hasNextInt()) {
+                value = scanner.nextInt();
+                if (value >= 0 && value < limit) {
+                    return value;
+                }
+            } else {
+                scanner.next();
+            }
+            System.out.println("Índice inválido.");
+        }
     }
 
     private static int readOption(Scanner scanner) {
