@@ -44,7 +44,7 @@ public class Board {
         }
     }
 
-    public void PrintMatrix() {
+    public void printMatrix() {
         PrintHeader();
         PrintBody();
         PrintFooter();
