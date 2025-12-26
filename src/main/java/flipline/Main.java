@@ -31,7 +31,12 @@ public class Main {
             default -> throw new IllegalStateException("Opción inválida");
         }
 
-        Board board = new Board(rows, cols, Color.RED);
+        int difficulty = readDifficulty(scanner);
+        int scrambleMoves = difficultyToMoves(difficulty);
+
+        BoardGenerator generator = new BoardGenerator();
+        Board board = generator.generate(rows, cols, scrambleMoves);
+
         int moves = 0;
 
         while (!board.isSolved()) {
@@ -43,7 +48,7 @@ public class Main {
             int row = userRow - 1;
             int col = userCol - 1;
 
-            board.selectCell(row, col);
+            board.selectCell(userRow - 1, userCol - 1);
             moves++;
         }
 
@@ -105,6 +110,41 @@ public class Main {
             System.out.println("Ingrese un número entero positivo.");
         }
     }
+
+    private static int readDifficulty(Scanner scanner) {
+        System.out.println();
+        System.out.println("Seleccione dificultad:");
+        System.out.println("1. Fácil");
+        System.out.println("2. Normal");
+        System.out.println("3. Difícil");
+        System.out.println("4. Extremo");
+
+        int option;
+
+        while (true) {
+            System.out.print("Opción: ");
+            if (scanner.hasNextInt()) {
+                option = scanner.nextInt();
+                if (option >= 1 && option <= 4) {
+                    return option;
+                }
+            } else {
+                scanner.next();
+            }
+            System.out.println("Opción inválida.");
+        }
+    }
+
+    private static int difficultyToMoves(int difficulty) {
+        return switch (difficulty) {
+            case 1 -> 5;    // Fácil
+            case 2 -> 15;   // Normal
+            case 3 -> 30;   // Difícil
+            case 4 -> 60;   // Extremo
+            default -> 15;
+        };
+    }
+
 
     private static void printTitle() {
         System.out.println("======================");
