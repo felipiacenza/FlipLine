@@ -75,8 +75,8 @@ public class Board {
 
     private void PrintBody() {
         for (Cell[] cell : cells) {
-            for (int column = 0; column < cell.length; column++) {
-                System.out.print(cell[column] + " ");
+            for (Cell value : cell) {
+                System.out.print(value + " ");
             }
             System.out.println();
         }
