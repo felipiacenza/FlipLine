@@ -17,8 +17,8 @@ public class Cell {
         return color;
     }
 
-    public void toggleColor(){
-        if (color == Color.RED){
+    public void toggleColor() {
+        if (color == Color.RED) {
             color = Color.BLUE;
         } else {
             color = Color.RED;
@@ -29,13 +29,11 @@ public class Cell {
     public String toString() {
         String symbol = (orientation == Orientation.VERTICAL) ? "|" : "─";
 
-        String colorCode = switch (color) {
-            case RED -> "\u001B[31m";
-            case BLUE -> "\u001B[34m";
-        };
-
-        String reset = "\u001B[0m";
-
-        return colorCode + symbol + reset;
+        if (color == Color.RED) {
+            return "\u001B[31m" + symbol + "\u001B[0m";
+        } else {
+            return "\u001B[34m" + symbol + "\u001B[0m";
+        }
     }
+
 }

@@ -67,11 +67,11 @@ public class Board {
         System.out.print("    ");
 
         for (int col = 1; col <= cells[0].length; col++) {
-            System.out.printf("%-3d", col);
+            System.out.printf(" %d ", col);
         }
         System.out.println();
 
-        System.out.print("   ");
+        System.out.print("    ");
         for (int col = 0; col < cells[0].length; col++) {
             System.out.print("---");
         }
@@ -79,7 +79,7 @@ public class Board {
     }
 
     private void printFooter() {
-        System.out.print("   ");
+        System.out.print("    ");
         for (int col = 0; col < cells[0].length; col++) {
             System.out.print("---");
         }
@@ -92,7 +92,7 @@ public class Board {
             System.out.printf("%-3d|", row + 1);
 
             for (int col = 0; col < cells[row].length; col++) {
-                System.out.print(cells[row][col] + " ");
+                System.out.printf(" %s ", cells[row][col]);
             }
             System.out.println();
         }
