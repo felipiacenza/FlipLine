@@ -48,7 +48,7 @@ public class Main {
             int row = userRow - 1;
             int col = userCol - 1;
 
-            board.selectCell(userRow - 1, userCol - 1);
+            board.selectCell(row, col);
             moves++;
         }
 
