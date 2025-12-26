@@ -5,19 +5,18 @@ import java.util.Random;
 public class Board {
     private final Cell[][] cells;
 
-    public Board(int rows, int columns) {
+    public Board(int rows, int columns, Color initialColor) {
         cells = new Cell[rows][columns];
-        initCells();
+        initCells(initialColor);
     }
 
-    private void initCells() {
+    private void initCells(Color initialColor) {
         Random random = new Random();
 
         for (int row = 0; row < cells.length; row++) {
             for (int col = 0; col < cells[row].length; col++) {
-                Color color = random.nextBoolean() ? Color.RED : Color.BLUE;
                 Orientation orientation = random.nextBoolean() ? Orientation.HORIZONTAL : Orientation.VERTICAL;
-                cells[row][col] = new Cell(color, orientation);
+                cells[row][col] = new Cell(initialColor, orientation);
             }
         }
     }

@@ -31,7 +31,7 @@ public class Main {
             default -> throw new IllegalStateException("Opción inválida");
         }
 
-        Board board = new Board(rows, cols);
+        Board board = new Board(rows, cols, Color.RED);
         int moves = 0;
 
         while (!board.isSolved()) {
