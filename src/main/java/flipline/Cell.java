@@ -24,8 +24,14 @@ public class Cell {
     @Override
     public String toString() {
         String symbol = (orientation == Orientation.VERTICAL) ? "|" : "─";
-        String colorCode = (color == Color.RED) ? "R" : "B";
 
-        return colorCode + symbol;
+        String colorCode = switch (color) {
+            case RED -> "\u001B[31m";
+            case BLUE -> "\u001B[34m";
+        };
+
+        String reset = "\u001B[0m";
+
+        return colorCode + symbol + reset;
     }
 }
