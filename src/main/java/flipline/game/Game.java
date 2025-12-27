@@ -16,8 +16,27 @@ public class Game {
     public Game() {
         this.scanner = new Scanner(System.in);
         printTitle();
-        int rows = readRows();
-        int cols = readColumns();
+        int size = readOption("Select an option: ");
+        int rows, cols;
+        switch (size) {
+            case 1 -> {
+                rows = 4;
+                cols = 4;
+            }
+            case 2 -> {
+                rows = 6;
+                cols = 6;
+            }
+            case 3 -> {
+                rows = 8;
+                cols = 8;
+            }
+            case 4 -> {
+                rows = readPositiveInt("Enter number of rows: ");
+                cols = readPositiveInt("Enter number of columns: ");
+            }
+            default -> throw new IllegalStateException("Invalid option");
+        }
         int difficulty = readDifficulty();
         int scrambleMoves = difficultyToMoves(difficulty, rows, cols);
         this.generator = new BoardGenerator();
@@ -138,43 +157,6 @@ public class Game {
         System.out.println("4. Custom");
     }
 
-    private int readRows() {
-        int size = readOption("Select an option: ");
-        switch (size) {
-            case 1 -> {
-                return 4;
-            }
-            case 2 -> {
-                return 6;
-            }
-            case 3 -> {
-                return 8;
-            }
-            case 4 -> {
-                return readPositiveInt("Enter number of rows: ");
-            }
-            default -> throw new IllegalStateException("Invalid option");
-        }
-    }
-
-    private int readColumns() {
-        int size = readOption("Select an option: ");
-        switch (size) {
-            case 1 -> {
-                return 4;
-            }
-            case 2 -> {
-                return 6;
-            }
-            case 3 -> {
-                return 8;
-            }
-            case 4 -> {
-                return readPositiveInt("Enter number of columns: ");
-            }
-            default -> throw new IllegalStateException("Invalid option");
-        }
-    }
 
     private int readDifficulty() {
         System.out.println();
@@ -184,8 +166,7 @@ public class Game {
         System.out.println("3. Hard");
         System.out.println("4. Extreme");
 
-        int option = readOption("Option: ");
-        return option;
+        return readOption("Option: ");
     }
 
     private int readOption(String message) {
