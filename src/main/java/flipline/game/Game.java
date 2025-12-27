@@ -24,9 +24,9 @@ public class Game {
 
         this.generator = new BoardGenerator();
         this.board = generator.generate(
-                config.rows,
-                config.cols,
-                config.scrambleMoves
+                config.rows(),
+                config.cols(),
+                config.scrambleMoves()
         );
 
         this.history = new ArrayDeque<>();
