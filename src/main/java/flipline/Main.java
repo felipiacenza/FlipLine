@@ -1,9 +1,15 @@
 package flipline;
 
 import java.util.Scanner;
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 
 public class Main {
     public static void main(String[] args) {
+
+        Deque<Move> history = new ArrayDeque<>();
+
         Scanner scanner = new Scanner(System.in);
 
         printTitle();
@@ -48,7 +54,9 @@ public class Main {
             int row = userRow - 1;
             int col = userCol - 1;
 
+            Move move = new Move(row, col);
             board.selectCell(row, col);
+            history.push(move);
             moves++;
         }
 
@@ -57,6 +65,11 @@ public class Main {
         System.out.println("Movimientos realizados: " + moves);
 
         scanner.close();
+    }
+
+    private static String readCommand(Scanner scanner, String message) {
+        System.out.print(message);
+        return scanner.next().trim().toUpperCase();
     }
 
     private static int readUserIndex(Scanner scanner, String message, int max) {
