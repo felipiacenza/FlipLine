@@ -19,7 +19,7 @@ public class Main {
 
         int size = readOption(scanner);
 
-                switch (size) {
+        switch (size) {
             case 1 -> {
                 rows = 4;
                 cols = 4;
@@ -40,7 +40,7 @@ public class Main {
         }
 
         int difficulty = readDifficulty(scanner);
-        int scrambleMoves = difficultyToMoves(difficulty,size);
+        int scrambleMoves = difficultyToMoves(difficulty, rows, cols);
 
         BoardGenerator generator = new BoardGenerator();
         Board board = generator.generate(rows, cols, scrambleMoves);
@@ -95,6 +95,7 @@ public class Main {
         }
 
         if (board.isSolved()) {
+            board.printMatrix();
             System.out.println("¡Juego resuelto!");
             System.out.println("Movimientos realizados: " + moves);
         }
@@ -216,38 +217,20 @@ public class Main {
         }
     }
 
-    private static int difficultyToMoves(int difficulty, int size) {
+    private static int difficultyToMoves(int difficulty, int rows, int cols) {
+        int cells = rows * cols;
 
-        switch (size){
-            case 1 -> {
-                return switch (difficulty) {
-                    case 1 -> 1;
-                    case 2 -> 2;
-                    case 3 -> 3;
-                    case 4 -> 4;
-                    default -> throw new IllegalStateException("Opción inválida");
-                };
-            }
-            case 2 -> {
-                return switch (difficulty) {
-                    case 1 -> 4;
-                    case 2 -> 6;
-                    case 3 -> 8;
-                    case 4 -> 10;
-                    default -> throw new IllegalStateException("Opción inválida");
-                };
-            }
-            case 3 -> {
-                return switch (difficulty) {
-                    case 1 -> 8;
-                    case 2 -> 12;
-                    case 3 -> 16;
-                    case 4 -> 20;
-                    default -> throw new IllegalStateException("Opción inválida");
-                };
-            }
-            default -> throw new IllegalStateException("Opción inválida");
-        }
+        double factor = switch (difficulty) {
+            case 1 -> 0.10; // Fácil
+            case 2 -> 0.20; // Normal
+            case 3 -> 0.35; // Difícil
+            case 4 -> 0.50; // Extremo
+            default -> throw new IllegalStateException("Dificultad inválida");
+        };
+
+        int moves = (int) Math.round(cells * factor);
+
+        return Math.max(moves, 1);
     }
 
 
