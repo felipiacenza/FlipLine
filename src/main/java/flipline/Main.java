@@ -17,7 +17,9 @@ public class Main {
         int rows;
         int cols;
 
-        switch (readOption(scanner)) {
+        int size = readOption(scanner);
+
+                switch (size) {
             case 1 -> {
                 rows = 4;
                 cols = 4;
@@ -38,7 +40,7 @@ public class Main {
         }
 
         int difficulty = readDifficulty(scanner);
-        int scrambleMoves = difficultyToMoves(difficulty);
+        int scrambleMoves = difficultyToMoves(difficulty,size);
 
         BoardGenerator generator = new BoardGenerator();
         Board board = generator.generate(rows, cols, scrambleMoves);
@@ -217,14 +219,38 @@ public class Main {
         }
     }
 
-    private static int difficultyToMoves(int difficulty) {
-        return switch (difficulty) {
-            case 1 -> 5;    // Fácil
-            case 2 -> 15;   // Normal
-            case 3 -> 30;   // Difícil
-            case 4 -> 60;   // Extremo
-            default -> 15;
-        };
+    private static int difficultyToMoves(int difficulty, int size) {
+
+        switch (size){
+            case 1 -> {
+                return switch (difficulty) {
+                    case 1 -> 1;
+                    case 2 -> 2;
+                    case 3 -> 3;
+                    case 4 -> 4;
+                    default -> throw new IllegalStateException("Opción inválida");
+                };
+            }
+            case 2 -> {
+                return switch (difficulty) {
+                    case 1 -> 4;
+                    case 2 -> 6;
+                    case 3 -> 8;
+                    case 4 -> 10;
+                    default -> throw new IllegalStateException("Opción inválida");
+                };
+            }
+            case 3 -> {
+                return switch (difficulty) {
+                    case 1 -> 8;
+                    case 2 -> 12;
+                    case 3 -> 16;
+                    case 4 -> 20;
+                    default -> throw new IllegalStateException("Opción inválida");
+                };
+            }
+            default -> throw new IllegalStateException("Opción inválida");
+        }
     }
 
 
