@@ -33,10 +33,10 @@ public class Main {
                 cols = 8;
             }
             case 4 -> {
-                rows = readPositiveInt(scanner, "Ingrese número de filas: ");
-                cols = readPositiveInt(scanner, "Ingrese número de columnas: ");
+                rows = readPositiveInt(scanner, "Enter number of rows: ");
+                cols = readPositiveInt(scanner, "Enter number of columns: ");
             }
-            default -> throw new IllegalStateException("Opción inválida");
+            default -> throw new IllegalStateException("Invalid option");
         }
 
         int difficulty = readDifficulty(scanner);
@@ -51,9 +51,9 @@ public class Main {
         while (!board.isSolved()) {
             board.printMatrix();
 
-            System.out.println("Ingrese fila/columna, 'U' para deshacer, 'H' para ver el historial de movimientos, 'S' para mostrar la solución o 'Q' para salir.");
+            System.out.println("Enter row/column, 'U' to undo, 'H' to view move history, 'S' to show the solution, or 'Q' to quit.");
 
-            String input = readCommand(scanner, "Fila (1 - " + rows + " | U/H/S/Q): ");
+            String input = readCommand(scanner, "Row (1 - " + rows + " | U/H/S/Q): ");
 
             switch (input) {
                 case "U":
@@ -74,16 +74,16 @@ public class Main {
             try {
                 userRow = Integer.parseInt(input);
             } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida.");
+                System.out.println("Invalid input.");
                 continue;
             }
 
             if (userRow < 1 || userRow > rows) {
-                System.out.println("Fila fuera de rango.");
+                System.out.println("Row out of range.");
                 continue;
             }
 
-            int userCol = readUserIndex(scanner, "Columna (1 - " + cols + "): ", cols);
+            int userCol = readUserIndex(scanner, "Column (1 - " + cols + "): ", cols);
 
             int row = userRow - 1;
             int col = userCol - 1;
@@ -96,20 +96,20 @@ public class Main {
 
         if (board.isSolved()) {
             board.printMatrix();
-            System.out.println("¡Juego resuelto!");
-            System.out.println("Movimientos realizados: " + moves);
+            System.out.println("Game solved!");
+            System.out.println("Moves made: " + moves);
         }
         scanner.close();
     }
 
     private static void exitGame() {
-        System.out.println("Saliendo del juego. ¡Hasta luego!");
+        System.out.println("Exiting the game. Goodbye!");
     }
 
     private static void getSolution(BoardGenerator generator) {
-        System.out.println("Solución:");
+        System.out.println("Solution:");
         for (Move move : generator.getSolution()) {
-            System.out.println("Fila: " + (move.row() + 1) + ", Columna: " + (move.col() + 1));
+            System.out.println("Row: " + (move.row() + 1) + ", Column: " + (move.col() + 1));
         }
     }
 
@@ -118,20 +118,20 @@ public class Main {
             Move last = history.pop();
             board.selectCell(last.row(), last.col());
             moves--;
-            System.out.println("Último movimiento deshecho.");
+            System.out.println("Last move undone.");
         } else {
-            System.out.println("No hay movimientos para deshacer.");
+            System.out.println("No moves to undo.");
         }
         return moves;
     }
 
     private static void showHistory(Deque<Move> history) {
         if (history.isEmpty()) {
-            System.out.println("No hay movimientos en el historial.");
+            System.out.println("No moves in history.");
         } else {
-            System.out.println("Historial de movimientos:");
+            System.out.println("Move history:");
             for (Move move : history) {
-                System.out.println("Fila: " + (move.row() + 1) + ", Columna: " + (move.col() + 1));
+                System.out.println("Row: " + (move.row() + 1) + ", Column: " + (move.col() + 1));
             }
         }
     }
@@ -154,7 +154,7 @@ public class Main {
             } else {
                 scanner.next();
             }
-            System.out.println("Valor inválido. Ingrese un número entre 1 y " + max + ".");
+            System.out.println("Invalid value. Enter a number between 1 and " + max + ".");
         }
     }
 
@@ -163,7 +163,7 @@ public class Main {
         int option;
 
         while (true) {
-            System.out.print("Seleccione una opción: ");
+            System.out.print("Select an option: ");
             if (scanner.hasNextInt()) {
                 option = scanner.nextInt();
                 if (option >= 1 && option <= 4) {
@@ -172,7 +172,7 @@ public class Main {
             } else {
                 scanner.next();
             }
-            System.out.println("Opción inválida.");
+            System.out.println("Invalid option.");
         }
     }
 
@@ -189,22 +189,22 @@ public class Main {
             } else {
                 scanner.next();
             }
-            System.out.println("Ingrese un número entero positivo.");
+            System.out.println("Enter a positive integer.");
         }
     }
 
     private static int readDifficulty(Scanner scanner) {
         System.out.println();
-        System.out.println("Seleccione dificultad:");
-        System.out.println("1. Fácil");
+        System.out.println("Select difficulty:");
+        System.out.println("1. Easy");
         System.out.println("2. Normal");
-        System.out.println("3. Difícil");
-        System.out.println("4. Extremo");
+        System.out.println("3. Hard");
+        System.out.println("4. Extreme");
 
         int option;
 
         while (true) {
-            System.out.print("Opción: ");
+            System.out.print("Option: ");
             if (scanner.hasNextInt()) {
                 option = scanner.nextInt();
                 if (option >= 1 && option <= 4) {
@@ -213,7 +213,7 @@ public class Main {
             } else {
                 scanner.next();
             }
-            System.out.println("Opción inválida.");
+            System.out.println("Invalid option.");
         }
     }
 
@@ -238,9 +238,9 @@ public class Main {
         System.out.println("======================");
         System.out.println(" FLIP LINE  |  v0.1v  ");
         System.out.println("======================");
-        System.out.println("1. Juego pequeño (4x4)");
-        System.out.println("2. Juego mediano (6x6)");
-        System.out.println("3. Juego grande (8x8)");
-        System.out.println("4. Personalizado");
+        System.out.println("1. Small game (4x4)");
+        System.out.println("2. Medium game (6x6)");
+        System.out.println("3. Large game (8x8)");
+        System.out.println("4. Custom");
     }
 }
