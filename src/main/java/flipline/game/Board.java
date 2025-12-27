@@ -1,4 +1,4 @@
-package flipline;
+package flipline.game;
 
 import java.util.Random;
 
@@ -8,6 +8,14 @@ public class Board {
     public Board(int rows, int columns, Color initialColor) {
         cells = new Cell[rows][columns];
         initCells(initialColor);
+    }
+
+    public int getRows() {
+        return cells.length;
+    }
+
+    public int getColumns() {
+        return cells[0].length;
     }
 
     private void initCells(Color initialColor) {

@@ -1,4 +1,4 @@
-package flipline;
+package flipline.game;
 
 import java.util.ArrayList;
 import java.util.Collections;

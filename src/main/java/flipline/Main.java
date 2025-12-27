@@ -1,9 +1,6 @@
 package flipline;
 
-import java.util.Scanner;
-import java.util.ArrayDeque;
-import java.util.Deque;
-
+import flipline.game.Game;
 
 public class Main {
     public static void main(String[] args) {

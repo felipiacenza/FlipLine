@@ -1,4 +1,4 @@
-package flipline;
+package flipline.game;
 
 public class Cell {
     private Color color;

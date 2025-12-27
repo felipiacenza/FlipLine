@@ -1,4 +1,4 @@
-package flipline;
+package flipline.game;
 
 public enum Orientation {
     VERTICAL, HORIZONTAL
