@@ -45,50 +45,27 @@ public class Main {
 
         int moves = 0;
 
+        label:
         while (!board.isSolved()) {
             board.printMatrix();
 
             System.out.println("Ingrese fila/columna, 'U' para deshacer, 'H' para ver el historial de movimientos, 'S' para mostrar la solución o 'Q' para salir.");
 
-             String command = readCommand(scanner, "Comando: ");
-
             String input = readCommand(scanner, "Fila (1 - " + rows + " | U/H/S/Q): ");
 
-            if (input.equals("U")) {
-                if (!history.isEmpty()) {
-                    Move last = history.pop();
-                    board.selectCell(last.row(), last.col());
-                    moves--;
-                    System.out.println("Último movimiento deshecho.");
-                } else {
-                    System.out.println("No hay movimientos para deshacer.");
-                }
-                continue;
-            }
-
-            if (input.equals("H")) {
-                if (history.isEmpty()) {
-                    System.out.println("No hay movimientos en el historial.");
-                } else {
-                    System.out.println("Historial de movimientos:");
-                    for (Move move : history) {
-                        System.out.println("Fila: " + (move.row() + 1) + ", Columna: " + (move.col() + 1));
-                    }
-                }
-                continue;
-            }
-
-            if (input.equals("S")) {
-                System.out.println("Solución:");
-                for (Move move : generator.getSolution()) {
-                    System.out.println("Fila: " + (move.row() + 1) + ", Columna: " + (move.col() + 1));
-                }
-                continue;
-            }
-
-            if (input.equals("Q")) {
-                System.out.println("Saliendo del juego. ¡Hasta luego!");
-                break;
+            switch (input) {
+                case "U":
+                    moves = UndoMovement(history, board, moves);
+                    continue;
+                case "H":
+                    showHistory(history);
+                    continue;
+                case "S":
+                    getSolution(generator);
+                    continue;
+                case "Q":
+                    exitGame();
+                    break label;
             }
 
             int userRow;
@@ -115,11 +92,48 @@ public class Main {
             moves++;
         }
 
-        board.printMatrix();
-        System.out.println("¡Juego resuelto!");
-        System.out.println("Movimientos realizados: " + moves);
-
+        if (board.isSolved()) {
+            System.out.println("¡Juego resuelto!");
+            System.out.println("Movimientos realizados: " + moves);
+        }
         scanner.close();
+    }
+
+    private static void exitGame() {
+        System.out.println("Saliendo del juego. ¡Hasta luego!");
+        return;
+    }
+
+    private static void getSolution(BoardGenerator generator) {
+        System.out.println("Solución:");
+        for (Move move : generator.getSolution()) {
+            System.out.println("Fila: " + (move.row() + 1) + ", Columna: " + (move.col() + 1));
+        }
+        return;
+    }
+
+    private static int UndoMovement(Deque<Move> history, Board board, int moves) {
+        if (!history.isEmpty()) {
+            Move last = history.pop();
+            board.selectCell(last.row(), last.col());
+            moves--;
+            System.out.println("Último movimiento deshecho.");
+        } else {
+            System.out.println("No hay movimientos para deshacer.");
+        }
+        return moves;
+    }
+
+    private static void showHistory(Deque<Move> history) {
+        if (history.isEmpty()) {
+            System.out.println("No hay movimientos en el historial.");
+        } else {
+            System.out.println("Historial de movimientos:");
+            for (Move move : history) {
+                System.out.println("Fila: " + (move.row() + 1) + ", Columna: " + (move.col() + 1));
+            }
+        }
+        return;
     }
 
     private static String readCommand(Scanner scanner, String message) {
