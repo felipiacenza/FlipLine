@@ -48,9 +48,11 @@ public class Main {
         while (!board.isSolved()) {
             board.printMatrix();
 
-            System.out.println("Ingrese fila/columna o 'U' para deshacer");
+            System.out.println("Ingrese fila/columna, 'U' para deshacer, 'H' para ver el historial de movimientos, 'S' para mostrar la solución o 'Q' para salir.");
 
-            String input = readCommand(scanner, "Fila (1 - " + rows + " | U): ");
+             String command = readCommand(scanner, "Comando: ");
+
+            String input = readCommand(scanner, "Fila (1 - " + rows + " | U/H/S/Q): ");
 
             if (input.equals("U")) {
                 if (!history.isEmpty()) {
@@ -62,6 +64,31 @@ public class Main {
                     System.out.println("No hay movimientos para deshacer.");
                 }
                 continue;
+            }
+
+            if (input.equals("H")) {
+                if (history.isEmpty()) {
+                    System.out.println("No hay movimientos en el historial.");
+                } else {
+                    System.out.println("Historial de movimientos:");
+                    for (Move move : history) {
+                        System.out.println("Fila: " + (move.row() + 1) + ", Columna: " + (move.col() + 1));
+                    }
+                }
+                continue;
+            }
+
+            if (input.equals("S")) {
+                System.out.println("Solución:");
+                for (Move move : generator.getSolution()) {
+                    System.out.println("Fila: " + (move.row() + 1) + ", Columna: " + (move.col() + 1));
+                }
+                continue;
+            }
+
+            if (input.equals("Q")) {
+                System.out.println("Saliendo del juego. ¡Hasta luego!");
+                break;
             }
 
             int userRow;
