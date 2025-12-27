@@ -5,6 +5,7 @@ import java.util.Deque;
 import java.util.Scanner;
 
 import flipline.ui.GameUI;
+import flipline.ui.BoardRenderer;
 
 
 public class Game {
@@ -42,7 +43,7 @@ public class Game {
 
     private void gameLoop() {
         while (!board.isSolved()) {
-            board.printMatrix();
+            BoardRenderer.render(board);
             System.out.println("Enter row/column, 'U' to undo, 'H' to view move history, 'S' to show the solution, or 'Q' to quit.");
             String input = readCommand("Row (1 - " + board.getRows() + " | U/H/S/Q): ");
 
@@ -65,7 +66,7 @@ public class Game {
     }
 
     private void endGame() {
-        board.printMatrix();
+        BoardRenderer.render(board);
         System.out.println("Game solved!");
         System.out.println("Moves made: " + moves);
     }
