@@ -4,6 +4,12 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Scanner;
 
+import flipline.ui.GameUI;
+import flipline.ui.MenuPrinter;
+
+import java.util.List;
+
+
 public class Game {
 
     private final Board board;
@@ -15,35 +21,21 @@ public class Game {
 
     public Game() {
         this.scanner = new Scanner(System.in);
-        printTitle();
-        int size = readOption("Select an option: ");
-        int rows, cols;
-        switch (size) {
-            case 1 -> {
-                rows = 4;
-                cols = 4;
-            }
-            case 2 -> {
-                rows = 6;
-                cols = 6;
-            }
-            case 3 -> {
-                rows = 8;
-                cols = 8;
-            }
-            case 4 -> {
-                rows = readPositiveInt("Enter number of rows: ");
-                cols = readPositiveInt("Enter number of columns: ");
-            }
-            default -> throw new IllegalStateException("Invalid option");
-        }
-        int difficulty = readDifficulty();
-        int scrambleMoves = difficultyToMoves(difficulty, rows, cols);
+
+        GameUI ui = new GameUI(scanner);
+        GameConfig config = ui.askForConfig();
+
         this.generator = new BoardGenerator();
-        this.board = generator.generate(rows, cols, scrambleMoves);
+        this.board = generator.generate(
+                config.rows,
+                config.cols,
+                config.scrambleMoves
+        );
+
         this.history = new ArrayDeque<>();
         this.moves = 0;
     }
+
 
     public void run() {
         gameLoop();
@@ -147,14 +139,8 @@ public class Game {
         }
     }
 
-    private void printTitle() {
-        System.out.println("======================");
-        System.out.println(" FLIP LINE  |  v0.1v  ");
-        System.out.println("======================");
-        System.out.println("1. Small game (4x4)");
-        System.out.println("2. Medium game (6x6)");
-        System.out.println("3. Large game (8x8)");
-        System.out.println("4. Custom");
+    private void printMainMenu() {
+        MenuPrinter.printMenu("FLIP LINE", "v0.1", List.of("1. Small   (4 x 4)", "2. Medium  (6 x 6)", "3. Large   (8 x 8)", "4. Custom"));
     }
 
 
