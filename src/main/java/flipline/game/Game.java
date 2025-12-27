@@ -5,9 +5,6 @@ import java.util.Deque;
 import java.util.Scanner;
 
 import flipline.ui.GameUI;
-import flipline.ui.MenuPrinter;
-
-import java.util.List;
 
 
 public class Game {
@@ -139,64 +136,5 @@ public class Game {
         }
     }
 
-    private void printMainMenu() {
-        MenuPrinter.printMenu("FLIP LINE", "v0.1", List.of("1. Small   (4 x 4)", "2. Medium  (6 x 6)", "3. Large   (8 x 8)", "4. Custom"));
-    }
 
-
-    private int readDifficulty() {
-        System.out.println();
-        System.out.println("Select difficulty:");
-        System.out.println("1. Easy");
-        System.out.println("2. Normal");
-        System.out.println("3. Hard");
-        System.out.println("4. Extreme");
-
-        return readOption("Option: ");
-    }
-
-    private int readOption(String message) {
-        int option;
-        while (true) {
-            System.out.print(message);
-            if (scanner.hasNextInt()) {
-                option = scanner.nextInt();
-                if (option >= 1 && option <= 4) {
-                    return option;
-                }
-            } else {
-                scanner.next();
-            }
-            System.out.println("Invalid option.");
-        }
-    }
-
-    private int readPositiveInt(String message) {
-        int value;
-        while (true) {
-            System.out.print(message);
-            if (scanner.hasNextInt()) {
-                value = scanner.nextInt();
-                if (value > 0) {
-                    return value;
-                }
-            } else {
-                scanner.next();
-            }
-            System.out.println("Enter a positive integer.");
-        }
-    }
-
-    private int difficultyToMoves(int difficulty, int rows, int cols) {
-        int cells = rows * cols;
-        double factor = switch (difficulty) {
-            case 1 -> 0.10; // Easy
-            case 2 -> 0.20; // Normal
-            case 3 -> 0.35; // Hard
-            case 4 -> 0.50; // Extreme
-            default -> throw new IllegalStateException("Invalid difficulty");
-        };
-        int moves = (int) Math.round(cells * factor);
-        return Math.max(moves, 1);
-    }
 }
