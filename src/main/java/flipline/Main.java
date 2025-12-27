@@ -48,8 +48,36 @@ public class Main {
         while (!board.isSolved()) {
             board.printMatrix();
 
-            int userRow = readUserIndex(scanner, "Fila (1 - " + rows + "): ", rows);
-            int userCol = readUserIndex(scanner, "Columna (1 - " + cols+ "): ", cols);
+            System.out.println("Ingrese fila/columna o 'U' para deshacer");
+
+            String input = readCommand(scanner, "Fila (1 - " + rows + " | U): ");
+
+            if (input.equals("U")) {
+                if (!history.isEmpty()) {
+                    Move last = history.pop();
+                    board.selectCell(last.row(), last.col());
+                    moves--;
+                    System.out.println("Último movimiento deshecho.");
+                } else {
+                    System.out.println("No hay movimientos para deshacer.");
+                }
+                continue;
+            }
+
+            int userRow;
+            try {
+                userRow = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida.");
+                continue;
+            }
+
+            if (userRow < 1 || userRow > rows) {
+                System.out.println("Fila fuera de rango.");
+                continue;
+            }
+
+            int userCol = readUserIndex(scanner, "Columna (1 - " + cols + "): ", cols);
 
             int row = userRow - 1;
             int col = userCol - 1;
