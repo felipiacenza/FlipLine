@@ -103,7 +103,6 @@ public class Main {
 
     private static void exitGame() {
         System.out.println("Saliendo del juego. ¡Hasta luego!");
-        return;
     }
 
     private static void getSolution(BoardGenerator generator) {
@@ -111,7 +110,6 @@ public class Main {
         for (Move move : generator.getSolution()) {
             System.out.println("Fila: " + (move.row() + 1) + ", Columna: " + (move.col() + 1));
         }
-        return;
     }
 
     private static int UndoMovement(Deque<Move> history, Board board, int moves) {
@@ -135,7 +133,6 @@ public class Main {
                 System.out.println("Fila: " + (move.row() + 1) + ", Columna: " + (move.col() + 1));
             }
         }
-        return;
     }
 
     private static String readCommand(Scanner scanner, String message) {
