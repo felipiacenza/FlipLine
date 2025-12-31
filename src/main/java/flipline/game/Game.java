@@ -144,19 +144,8 @@ public class Game {
             history.push(new Move(row, col));
             moves++;
 
-            warnIfGoingWrong();
-
         } catch (NumberFormatException e) {
             System.out.println("Invalid input.");
-        }
-    }
-
-    private void warnIfGoingWrong() {
-        BoardSolution solution = solveCurrentBoard();
-        int remaining = solution.rowMoves().size() + solution.columnMoves().size();
-
-        if (remaining > (board.getRows() + board.getColumns()) / 2) {
-            System.out.println("⚠️ Warning: you're moving away from the optimal solution.");
         }
     }
 
