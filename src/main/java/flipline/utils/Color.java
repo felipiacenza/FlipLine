@@ -1,4 +1,4 @@
-package flipline.game;
+package flipline.utils;
 
 public enum Color {
     RED, BLUE

@@ -1,5 +1,8 @@
 package flipline.game;
 
+import flipline.utils.Color;
+import flipline.utils.Orientation;
+
 import java.util.Random;
 
 public class Board {

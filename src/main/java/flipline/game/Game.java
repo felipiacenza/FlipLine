@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import flipline.ui.GameUI;
 import flipline.ui.BoardRenderer;
+import flipline.utils.GameConfig;
 
 
 public class Game {

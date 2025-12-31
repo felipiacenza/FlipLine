@@ -1,5 +1,8 @@
 package flipline.game;
 
+import flipline.utils.Color;
+import flipline.utils.Orientation;
+
 public class Cell {
     private Color color;
     private final Orientation orientation;

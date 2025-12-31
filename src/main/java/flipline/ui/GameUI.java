@@ -3,7 +3,7 @@ package flipline.ui;
 import java.util.List;
 import java.util.Scanner;
 
-import flipline.game.GameConfig;
+import flipline.utils.GameConfig;
 
 public class GameUI {
 
