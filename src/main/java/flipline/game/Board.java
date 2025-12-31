@@ -1,5 +1,6 @@
 package flipline.game;
 
+import flipline.solver.BoardState;
 import flipline.utils.Color;
 import flipline.utils.Orientation;
 
@@ -71,5 +72,19 @@ public class Board {
             cell[col].toggleColor();
         }
     }
+
+    public BoardState toState() {
+        boolean[][] state = new boolean[getRows()][getColumns()];
+        Color target = cells[0][0].getColor();
+
+        for (int r = 0; r < getRows(); r++) {
+            for (int c = 0; c < getColumns(); c++) {
+                state[r][c] = cells[r][c].getColor() != target;
+            }
+        }
+
+        return new BoardState(state);
+    }
+
 
 }
