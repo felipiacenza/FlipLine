@@ -75,7 +75,7 @@ public class Board {
 
     public BoardState toState() {
         boolean[][] state = new boolean[getRows()][getColumns()];
-        Color target = cells[0][0].getColor();
+        Color target = Color.RED;
 
         for (int r = 0; r < getRows(); r++) {
             for (int c = 0; c < getColumns(); c++) {
