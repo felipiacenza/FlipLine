@@ -186,33 +186,33 @@ public class Game {
         BoardSolution solution = solveCurrentBoard();
 
         if (!solution.rowMoves().isEmpty()) {
-            int row = solution.rowMoves().get(0).row();
+            int row = solution.rowMoves().getFirst().row();
             Move cell = board.findCellForRowFlip(row);
 
             if (cell != null) {
                 System.out.println(
-                        "Pista: seleccioná la celda (" +
+                        "Hint: select the cell (" +
                                 (cell.row() + 1) + ", " + (cell.col() + 1) +
-                                ") para voltear la fila " + (row + 1)
+                                ") to flip the row " + (row + 1)
                 );
             }
             return;
         }
 
         if (!solution.columnMoves().isEmpty()) {
-            int col = solution.columnMoves().get(0).col();
+            int col = solution.columnMoves().getFirst().col();
             Move cell = board.findCellForColumnFlip(col);
 
             if (cell != null) {
                 System.out.println(
-                        "Pista: seleccioná la celda (" +
+                        "Hint: select the cell (" +
                                 (cell.row() + 1) + ", " + (cell.col() + 1) +
-                                ") para voltear la columna " + (col + 1)
+                                ") to flip the column " + (col + 1)
                 );
             }
             return;
         }
 
-        System.out.println("El tablero ya está resuelto.");
+        System.out.println("The board is already solved.");
     }
 }
