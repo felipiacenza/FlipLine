@@ -4,6 +4,9 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Scanner;
 
+import flipline.solver.BoardSolution;
+import flipline.solver.BoardSolver;
+import flipline.solver.BoardState;
 import flipline.ui.GameUI;
 import flipline.ui.BoardRenderer;
 import flipline.utils.GameConfig;
@@ -12,7 +15,7 @@ import flipline.utils.GameConfig;
 public class Game {
 
     private final Board board;
-    private final BoardGenerator generator;
+    private final BoardSolver solver;
     private final Deque<Move> history;
     private final Scanner scanner;
 
@@ -24,7 +27,7 @@ public class Game {
         GameUI ui = new GameUI(scanner);
         GameConfig config = ui.askForConfig();
 
-        this.generator = new BoardGenerator();
+        BoardGenerator generator = new BoardGenerator();
         this.board = generator.generate(
                 config.rows(),
                 config.cols(),
@@ -33,6 +36,8 @@ public class Game {
 
         this.history = new ArrayDeque<>();
         this.moves = 0;
+
+        this.solver = new BoardSolver();
     }
 
 
@@ -45,10 +50,13 @@ public class Game {
     private void gameLoop() {
         while (!board.isSolved()) {
             BoardRenderer.render(board);
-            System.out.println("Enter row/column, 'U' to undo, 'H' to view move history, 'S' to show the solution, or 'Q' to quit.");
-            String input = readCommand("Row (1 - " + board.getRows() + " | U/H/S/Q): ");
+            System.out.println("Enter row/column, 'P' to show hint, 'U' to undo, 'H' to view move history, 'S' to show the solution, or 'Q' to quit.");
+            String input = readCommand("Row (1 - " + board.getRows() + " | P/U/H/S/Q): ");
 
             switch (input) {
+                case "P":
+                    showHint();
+                    break;
                 case "U":
                     undoMove();
                     break;
@@ -100,11 +108,24 @@ public class Game {
     }
 
     private void showSolution() {
-        System.out.println("Solution:");
-        for (Move move : generator.getSolution()) {
-            System.out.println("Row: " + (move.row() + 1) + ", Column: " + (move.col() + 1));
+        BoardSolution solution = solveCurrentBoard();
+
+        if (solution.isEmpty()) {
+            System.out.println("The board is already solved.");
+            return;
+        }
+
+        System.out.println("Solution from the current state:");
+
+        for (Move move : solution.rowMoves()) {
+            System.out.println("Flip row: " + (move.row() + 1));
+        }
+
+        for (Move move : solution.columnMoves()) {
+            System.out.println("Flip column: " + (move.col() + 1));
         }
     }
+
 
     private void processMove(String input) {
         try {
@@ -113,14 +134,32 @@ public class Game {
                 System.out.println("Row out of range.");
                 return;
             }
-            int col = readUserIndex("Column (1 - " + board.getColumns() + "): ", board.getColumns()) - 1;
+
+            int col = readUserIndex(
+                    "Column (1 - " + board.getColumns() + "): ",
+                    board.getColumns()
+            ) - 1;
+
             board.selectCell(row, col);
             history.push(new Move(row, col));
             moves++;
+
+            warnIfGoingWrong();
+
         } catch (NumberFormatException e) {
             System.out.println("Invalid input.");
         }
     }
+
+    private void warnIfGoingWrong() {
+        BoardSolution solution = solveCurrentBoard();
+        int remaining = solution.rowMoves().size() + solution.columnMoves().size();
+
+        if (remaining > (board.getRows() + board.getColumns()) / 2) {
+            System.out.println("⚠️ Warning: you're moving away from the optimal solution.");
+        }
+    }
+
 
     private int readUserIndex(String message, int max) {
         int value;
@@ -138,5 +177,42 @@ public class Game {
         }
     }
 
+    private BoardSolution solveCurrentBoard() {
+        BoardState state = board.toState();
+        return solver.solve(state);
+    }
 
+    private void showHint() {
+        BoardSolution solution = solveCurrentBoard();
+
+        if (!solution.rowMoves().isEmpty()) {
+            int row = solution.rowMoves().get(0).row();
+            Move cell = board.findCellForRowFlip(row);
+
+            if (cell != null) {
+                System.out.println(
+                        "Pista: seleccioná la celda (" +
+                                (cell.row() + 1) + ", " + (cell.col() + 1) +
+                                ") para voltear la fila " + (row + 1)
+                );
+            }
+            return;
+        }
+
+        if (!solution.columnMoves().isEmpty()) {
+            int col = solution.columnMoves().get(0).col();
+            Move cell = board.findCellForColumnFlip(col);
+
+            if (cell != null) {
+                System.out.println(
+                        "Pista: seleccioná la celda (" +
+                                (cell.row() + 1) + ", " + (cell.col() + 1) +
+                                ") para voltear la columna " + (col + 1)
+                );
+            }
+            return;
+        }
+
+        System.out.println("El tablero ya está resuelto.");
+    }
 }

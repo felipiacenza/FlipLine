@@ -86,5 +86,23 @@ public class Board {
         return new BoardState(state);
     }
 
+    public Move findCellForRowFlip(int row) {
+        for (int c = 0; c < getColumns(); c++) {
+            if (cells[row][c].getOrientation() == Orientation.HORIZONTAL) {
+                return new Move(row, c);
+            }
+        }
+        return null;
+    }
+
+    public Move findCellForColumnFlip(int col) {
+        for (int r = 0; r < getRows(); r++) {
+            if (cells[r][col].getOrientation() == Orientation.VERTICAL) {
+                return new Move(r, col);
+            }
+        }
+        return null;
+    }
+
 
 }

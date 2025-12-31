@@ -58,6 +58,9 @@ public class GameUI {
     }
 
     private int readDifficulty() {
+
+
+
         MenuPrinter.printMenu(
                 "Difficulty",
                 "",
